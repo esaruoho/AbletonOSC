@@ -1,4 +1,4 @@
-from typing import Tuple, Any, List
+from typing import Tuple, Any
 from .handler import AbletonOSCHandler
 import Live
 import logging
