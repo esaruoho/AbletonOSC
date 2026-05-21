@@ -22,10 +22,21 @@ class TrackHandler(AbletonOSCHandler):
                     targets = [(track, track_id)]
 
                 for track, track_id in targets:
-                    if include_track_id:
-                        rv = func(track, *args, tuple([track_id] + list(params[1:])))
-                    else:
-                        rv = func(track, *args, tuple(params[1:]))
+                    try:
+                        if include_track_id:
+                            rv = func(track, *args, tuple([track_id] + list(params[1:])))
+                        else:
+                            rv = func(track, *args, tuple(params[1:]))
+                    except AttributeError:
+                        #--------------------------------------------------------------------------------
+                        # When fanning out across all tracks with the "*" wildcard, some properties
+                        # only exist on regular Audio/MIDI tracks (e.g. `arm`, `solo`, `mute` aren't
+                        # on master tracks). Silently skip incompatible tracks so wildcard sets aren't
+                        # left half-applied. Direct addressing still raises so typos surface loudly.
+                        #--------------------------------------------------------------------------------
+                        if params[0] == "*":
+                            continue
+                        raise
 
                     if rv is not None:
                         return (track_id, *rv)
