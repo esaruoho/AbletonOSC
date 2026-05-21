@@ -231,9 +231,11 @@ To query the properties of multiple tracks, see [Song: Properties of cue points,
 
 ### Track methods
 
-| Address                    | Query params | Response params | Description             |
-|:---------------------------|:-------------|:----------------|:------------------------|
-| /live/track/stop_all_clips | track_id     |                 | Stop all clips on track |
+| Address                       | Query params                  | Response params | Description                                                                                                       |
+|:------------------------------|:------------------------------|:----------------|:------------------------------------------------------------------------------------------------------------------|
+| /live/track/stop_all_clips    | track_id                      |                 | Stop all clips on track                                                                                           |
+| /live/track/create_audio_clip | track_id, file_path, position |                 | Create an audio clip on the track in **arrangement view** by importing the sample at `file_path` at `position` beats. Not for session view — use `/live/clip_slot/create_clip` to create a session clip. |
+| /live/track/create_midi_clip  | track_id, position, length    |                 | Create a MIDI clip on the track in **arrangement view** at `position` beats, with the given `length` in beats. Not for session view — use `/live/clip_slot/create_clip` to create a session clip. |
 
 ### Track properties
 
