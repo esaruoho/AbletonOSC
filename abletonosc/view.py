@@ -1,5 +1,6 @@
 from functools import partial
 from typing import Optional, Tuple, Any
+import Live
 from .handler import AbletonOSCHandler
 
 class ViewHandler(AbletonOSCHandler):
@@ -48,3 +49,16 @@ class ViewHandler(AbletonOSCHandler):
         self.osc_server.add_handler('/live/view/start_listen/selected_track', partial(self._start_listen, self.song.view, "selected_track", getter=get_selected_track))
         self.osc_server.add_handler('/live/view/stop_listen/selected_scene', partial(self._stop_listen, self.song.view, "selected_scene"))
         self.osc_server.add_handler('/live/view/stop_listen/selected_track', partial(self._stop_listen, self.song.view, "selected_track"))
+
+        def scroll_view(params: Tuple[Any]):
+            #--------------------------------------------------------------------------------
+            # Wraps Live.Application.Application.View.scroll_view(direction, view_name="",
+            # shift_pressed=False). The direction integer maps to
+            # Live.Application.Application.View.NavDirection — typically 0=up, 1=down,
+            # 2=left, 3=right. We pass an empty view_name and shift_pressed=False so the
+            # scroll affects the currently focused view, matching Live's keyboard arrows.
+            #--------------------------------------------------------------------------------
+            direction = int(params[0])
+            Live.Application.get_application().view.scroll_view(direction, "", False)
+
+        self.osc_server.add_handler("/live/view/scroll_view", scroll_view)
