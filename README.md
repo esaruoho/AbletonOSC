@@ -217,6 +217,8 @@ Represents the view (user interface) of live
 | /live/view/stop_listen/selected_scene  |                          |                          | Stop listening to the selected scene (first scene = 0)  |
 | /live/view/stop_listen/selected_track  |                          |                          | Stop listening to selected track (first track = 0)      |
 | /live/view/scroll_view                 | direction                |                          | Scroll the currently focused view by one step in the given `direction` (`Live.Application.Application.View.NavDirection` — typically 0=up, 1=down, 2=left, 3=right). Wraps `Application.View.scroll_view(direction, "", False)`. |
+| /live/view/show_clip_envelope          |                          |                          | Focus Clip View and show the Envelopes box for the clip displayed there |
+| /live/view/hide_clip_envelope          |                          |                          | Hide the Envelopes box for the clip displayed in Clip View              |
 </details>
 
 ---
