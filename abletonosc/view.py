@@ -42,11 +42,17 @@ class ViewHandler(AbletonOSCHandler):
             Focuses Clip View and shows the Envelopes box for the clip currently
             displayed there.
             """
+            #--------------------------------------------------------------------------------
+            # Focus Clip View FIRST. detail_clip is empty while the detail pane is showing
+            # Device View, so checking it beforehand would refuse to do the very thing that
+            # would have made a clip available.
+            #--------------------------------------------------------------------------------
+            Live.Application.get_application().view.focus_view("Detail/Clip")
+
             clip = self.song.view.detail_clip
             if clip is None:
                 raise RuntimeError("No clip is currently shown in Clip View")
 
-            Live.Application.get_application().view.focus_view("Detail/Clip")
             clip.view.show_envelope()
 
         def hide_clip_envelope(params: Optional[Tuple] = ()):
